@@ -821,6 +821,15 @@ input:checked+.slider:before {
 
 /* END MODAL */
 
+::-webkit-scrollbar-thumb {
+  background-color: var(--darkGrey);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
 /* MEDIA QUERIES */
 @media screen and (max-width: 540px) {
   .container img {
