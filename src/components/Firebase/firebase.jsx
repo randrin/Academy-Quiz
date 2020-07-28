@@ -1,5 +1,6 @@
 import app from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,17 +18,21 @@ class Firebase {
   constructor() {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
+    this.db = app.firestore();
   }
 
-  // Inscription
+  // Sign Up
   signUpUser = (email, password) =>
     this.auth.createUserWithEmailAndPassword(email, password);
 
-  // Connexion
+  // Sign Up with Cloud Firestore
+  signUpUserUID = (uid) => this.db.doc(`users/${uid}`);
+
+  // LOgin
   loginUser = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
-  // Déconnexion
+  // LOgout
   logoutUser = () => this.auth.signOut();
 
   // Reset Password

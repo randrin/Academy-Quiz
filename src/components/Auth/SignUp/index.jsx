@@ -23,9 +23,15 @@ const SignUp = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = newUser;
+    const { email, password, pseudo } = newUser;
     academyContext
       .signUpUser(email, password)
+      .then((response) => {
+        return academyContext.signUpUserUID(response.user.uid).set({
+          pseudo,
+          email,
+        });
+      })
       .then((response) => {
         console.log(response);
         setNewUser({ ...newUserData });
@@ -50,7 +56,7 @@ const SignUp = (props) => {
     );
 
   // Validation Error
-  const errorMsg = error !== '' && <span>{error.message}</span>;
+  const errorMsg = error !== "" && <span>{error.message}</span>;
 
   return (
     <div className="signUpLoginBox">
