@@ -1,9 +1,14 @@
 import React from "react";
+import NavBar from "../NavBar";
+import Quiz from "../Quiz";
 
 const Welcome = () => {
   return (
     <div className="quiz-bg">
-      <div className="container">Welcome Page</div>
+      <div className="container">
+        <NavBar />
+        <Quiz />
+      </div>
     </div>
   );
 };
