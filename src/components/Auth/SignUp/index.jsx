@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { AcademyContext } from "../Firebase";
+import { AcademyContext } from "../../Firebase";
 
 const SignUp = (props) => {
   const newUserData = {
@@ -113,7 +113,7 @@ const SignUp = (props) => {
             </form>
             <hr />
             <Link to="/login" className="">
-              <span>Vous avez déjà un compte? connectez-vous</span>
+              <span>Vous avez déjà un compte? Connectez-vous</span>
             </Link>
           </div>
         </div>

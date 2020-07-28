@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
-import { AcademyContext } from "../Firebase";
+import { AcademyContext } from "../../Firebase";
 
 const Login = (props) => {
   const userData = {
@@ -91,11 +91,16 @@ const Login = (props) => {
                 />
                 <label>Votre Mot de Passe</label>
               </div>
+              <div className="forgotPassword">
+                <Link to="/forgot/password" className="forgotPassword">
+                  Vous avez oublié votre Mot de Passe?
+                </Link>
+              </div>
               {btnSubmit}
             </form>
             <hr />
             <Link to="/signup" className="">
-              <span>Vous etes nouveau? inscrivez-vous</span>
+              <span>Vous êtes nouveau? Inscrivez-vous</span>
             </Link>
           </div>
         </div>

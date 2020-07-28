@@ -4,9 +4,10 @@ import Header from "../Header";
 import Home from "../Home";
 import Footer from "../Footer";
 import Welcome from "../Welcome";
-import Login from "../Login";
-import SignUp from "../SignUp";
+import Login from "../Auth/Login";
+import SignUp from "../Auth/SignUp";
 import ErrorPage from "../Errors";
+import ForgotPassword from "../Auth/ForgotPassword";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/welcome" component={Welcome} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/forgot/password" component={ForgotPassword} />
         <Route component={ErrorPage} />
       </Switch>
       <Footer />
