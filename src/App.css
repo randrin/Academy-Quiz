@@ -188,6 +188,25 @@ main {
   background-color: var(--white-color);
 }
 
+.btn-loginAndSign {
+  border: 2px solid var(--red-color);
+  color: var(--white-color);
+  padding: 12px 25px;
+  border-radius: 5px;
+  background-color: var(--red-color) !important;
+  font-weight: normal;
+  font-size: 19px;
+  text-align: center;
+  text-decoration: none;
+  margin: auto;
+}
+
+.btn-loginAndSign:hover {
+  border: 2px solid var(--red-color);
+  color: var(--red-color) !important;
+  background-color: var(--white-color) !important;
+}
+
 .btn-icon {
   top: 4px;
   right: 5px;
@@ -300,7 +319,7 @@ footer {
   text-align: center;
   border: 1px solid var(--red-color);
   padding: 10px;
-  margin: 15px 0;
+  margin: 50px 0;
 }
 
 .formContent {
@@ -309,6 +328,15 @@ footer {
   box-sizing: border-box;
 }
 
+.formContent a {
+  text-decoration: none;
+}
+
+.formContent a span:hover {
+  color: var(--white-color);
+  border: 1px solid var(--white-color);
+}
+  
 .formContent h2 {
   margin: 0 0 40px 0;
   padding: 0;
@@ -326,7 +354,6 @@ footer {
   padding: 10px 0;
   font-size: 17px;
   color: var(--red-color);
-  text-transform: uppercase;
   font-weight: bold;
   margin-bottom: 30px;
   border: none;
@@ -847,7 +874,7 @@ input:checked+.slider:before {
 /* END MODAL */
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--darkGrey);
+  background-color: var(--dark-red-color);
   border-radius: 20px;
 }
 
