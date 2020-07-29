@@ -1,9 +1,9 @@
 import React from "react";
 
-const Quiz = () => {
+const Quiz = (props) => {
   return (
     <div className="quiz-bg">
-      <div className="container">Quiz Section</div>
+      <div className="container">Pseudo: {props.userData.pseudo}</div>
     </div>
   );
 };

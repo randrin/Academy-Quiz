@@ -26,7 +26,7 @@ class Firebase {
     this.auth.createUserWithEmailAndPassword(email, password);
 
   // Sign Up with Cloud Firestore
-  signUpUserUID = (uid) => this.db.doc(`users/${uid}`);
+  signUpUserWithUID = (uid) => this.db.doc(`users/${uid}`);
 
   // LOgin
   loginUser = (email, password) =>

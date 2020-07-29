@@ -27,7 +27,7 @@ const SignUp = (props) => {
     academyContext
       .signUpUser(email, password)
       .then((response) => {
-        return academyContext.signUpUserUID(response.user.uid).set({
+        return academyContext.signUpUserWithUID(response.user.uid).set({
           pseudo,
           email,
         });
