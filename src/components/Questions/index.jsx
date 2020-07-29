@@ -10,9 +10,11 @@ class Questions extends Component {
       firstLevel: 0,
       maxQuestions: 10,
       storedQuestions: [],
+      userAnswer: "",
       question: "",
       options: [],
       idQuestion: 0,
+      disabledSubmit: true,
     };
   }
 
@@ -32,6 +34,13 @@ class Questions extends Component {
     }
   };
 
+  selectedResponse = (selected) => {
+    this.setState({
+      userAnswer: selected,
+      disabledSubmit: false,
+    });
+  };
+
   componentDidMount() {
     this.loadQuestions(this.state.levels[this.state.firstLevel]);
   }
@@ -46,18 +55,22 @@ class Questions extends Component {
   }
 
   render() {
-    const { question, options } = this.state;
+    const { question, options, disabledSubmit, userAnswer } = this.state;
     return (
       <div>
         <h2>{question}</h2>
         {options.map((option, index) => {
           return (
-            <p key={index} className="answerOptions">
+            <p
+              key={index}
+              onClick={() => this.selectedResponse(option)}
+              className={`answerOptions ${userAnswer === option ? 'selected' : null}`}
+            >
               {option}
             </p>
           );
         })}
-        <button className="btnSubmit">
+        <button disabled={disabledSubmit} className="btnSubmit">
           Suivant <FaChevronRight className="academy-quiz-icon" />
         </button>
       </div>
