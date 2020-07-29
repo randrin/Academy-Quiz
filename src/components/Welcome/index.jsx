@@ -29,7 +29,7 @@ const Welcome = (prop) => {
     return () => {
       listener();
     };
-  }, [userIsLogged]);
+  }, [userIsLogged, academyContext, prop.history]);
 
   return userIsLogged === null ? (
     <>
