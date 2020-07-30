@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AcademyContext } from "../Firebase";
 import NavBar from "../NavBar";
 import Quiz from "../Quiz";
+import { toast } from "react-toastify";
+toast.configure();
 
 const Welcome = (prop) => {
   const [userIsLogged, setUserIsLogged] = useState(null);
@@ -20,6 +22,18 @@ const Welcome = (prop) => {
           if (doc && doc.exists) {
             const user = doc.data();
             setUserData(user);
+            // Alert Welcome User
+            if (user.pseudo) {
+              toast.info(`Welocome ${user.pseudo} to Academy Quizz`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+            }
           }
         })
         .catch((error) => {

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
+import "react-toastify/dist/ReactToastify.min.css";
 import Index from "./components/App";
 import Firebase, { AcademyContext } from "./components/Firebase";
 

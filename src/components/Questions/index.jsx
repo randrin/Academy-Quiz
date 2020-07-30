@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { QuizQuestions } from "../../data/index";
+import { toast } from "react-toastify";
+toast.configure();
 class Questions extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +13,7 @@ class Questions extends Component {
       maxQuestions: 10,
       storedQuestions: [],
       userAnswer: "",
+      userScore: 0,
       question: "",
       options: [],
       idQuestion: 0,
@@ -18,9 +21,12 @@ class Questions extends Component {
     };
   }
 
+  questionsWithAnswers = React.createRef();
+
   loadQuestions = (level) => {
     const allQuizz = QuizQuestions[0].quizz[level];
     if (allQuizz.length >= this.state.maxQuestions) {
+      this.questionsWithAnswers.current = allQuizz;
       const questionsWithoutAnswers = allQuizz.map(
         ({ answer, ...questions }) => questions
       );
@@ -41,12 +47,62 @@ class Questions extends Component {
     });
   };
 
+  nextQuestion = () => {
+    // First check the question number not greater than 10
+    if (this.state.idQuestion === this.state.maxQuestions - 1) {
+      console.log("End Quizz ...");
+    } else {
+      this.setState((prevState) => ({
+        idQuestion: prevState.idQuestion + 1,
+      }));
+    }
+
+    // Check the user selected answer and the question answer quizz
+    if (
+      this.questionsWithAnswers.current[this.state.idQuestion].answer ===
+      this.state.userAnswer
+    ) {
+      this.setState((prevState) => ({
+        userScore: prevState.userScore + 1,
+        idQuestion: prevState.idQuestion + 1,
+        disabledSubmit: true,
+      }));
+      // Alert Good Answer
+      toast.success(`Bonne Réponse. +1`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      // Alert Bad Answer
+      toast.error(`Mauvaise Réponse. +0`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   componentDidMount() {
     this.loadQuestions(this.state.levels[this.state.firstLevel]);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.storedQuestions !== prevState.storedQuestions) {
+      this.setState({
+        question: this.state.storedQuestions[this.state.idQuestion].question,
+        options: this.state.storedQuestions[this.state.idQuestion].options,
+      });
+    }
+    if (this.state.idQuestion !== prevState.idQuestion) {
       this.setState({
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options,
@@ -64,13 +120,19 @@ class Questions extends Component {
             <p
               key={index}
               onClick={() => this.selectedResponse(option)}
-              className={`answerOptions ${userAnswer === option ? 'selected' : null}`}
+              className={`answerOptions ${
+                userAnswer === option ? "selected" : null
+              }`}
             >
               {option}
             </p>
           );
         })}
-        <button disabled={disabledSubmit} className="btnSubmit">
+        <button
+          disabled={disabledSubmit}
+          onClick={this.nextQuestion}
+          className="btnSubmit"
+        >
           Suivant <FaChevronRight className="academy-quiz-icon" />
         </button>
       </div>
