@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AcademyContext } from "../Firebase";
 import NavBar from "../NavBar";
-import Quiz from "../Quiz";
+import StartQuiz from "../Quiz/Start";
 import { toast } from "react-toastify";
 toast.configure();
 
@@ -54,7 +54,7 @@ const Welcome = (prop) => {
     <div className="quiz-bg">
       <div className="container">
         <NavBar />
-        <Quiz userData={userData} />
+        <StartQuiz userData={userData} />
       </div>
     </div>
   );

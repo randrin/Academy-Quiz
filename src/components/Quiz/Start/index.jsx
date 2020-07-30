@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import Levels from "../Levels";
-import ProgressBar from "../ProgressBar";
-import Questions from "../Questions";
+import Levels from "../../Levels";
+import Questions from "../../Questions";
 
-class Quiz extends Component {
+class StartQuiz extends Component {
   render() {
     const { pseudo } = this.props.userData;
     return (
@@ -12,11 +11,10 @@ class Quiz extends Component {
           <div className="container">Pseudo: {pseudo}</div>
         </div>
         <Levels />
-        <ProgressBar />
         <Questions />
       </>
     );
   }
 }
 
-export default Quiz;
+export default StartQuiz;

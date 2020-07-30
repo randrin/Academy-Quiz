@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { FaChevronRight } from "react-icons/fa";
+import ProgressBar from "../../components/ProgressBar";
 import { QuizQuestions } from "../../data/index";
 import { toast } from "react-toastify";
+import EndQuiz from "../Quiz/End";
 toast.configure();
 class Questions extends Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class Questions extends Component {
       options: [],
       idQuestion: 0,
       disabledSubmit: true,
+      endQuiz: false,
     };
   }
 
@@ -50,7 +53,9 @@ class Questions extends Component {
   nextQuestion = () => {
     // First check the question number not greater than 10
     if (this.state.idQuestion === this.state.maxQuestions - 1) {
-      console.log("End Quizz ...");
+      this.setState({
+        endQuiz: true,
+      });
     } else {
       this.setState((prevState) => ({
         idQuestion: prevState.idQuestion + 1,
@@ -111,9 +116,19 @@ class Questions extends Component {
   }
 
   render() {
-    const { question, options, disabledSubmit, userAnswer } = this.state;
-    return (
-      <div>
+    const {
+      question,
+      options,
+      disabledSubmit,
+      userAnswer,
+      endQuiz,
+    } = this.state;
+
+    return endQuiz ? (
+      <EndQuiz />
+    ) : (
+      <>
+        <ProgressBar />
         <h2>{question}</h2>
         {options.map((option, index) => {
           return (
@@ -135,7 +150,7 @@ class Questions extends Component {
         >
           Suivant <FaChevronRight className="academy-quiz-icon" />
         </button>
-      </div>
+      </>
     );
   }
 }
