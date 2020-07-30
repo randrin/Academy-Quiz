@@ -129,8 +129,8 @@ class Questions extends Component {
       maxQuestions,
     } = this.state;
 
-    return endQuiz ? (
-      <EndQuiz />
+    return !endQuiz ? (
+      <EndQuiz ref={this.questionsWithAnswers} />
     ) : (
       <>
         <ProgressBar idQuestion={idQuestion} maxQuestions={maxQuestions} />
@@ -154,7 +154,7 @@ class Questions extends Component {
           className="btnSubmit"
         >
           {idQuestion === maxQuestions - 1 ? "Terminer" : "Suivant"}
-          <FaChevronRight className="academy-quiz-icon" />
+          <FaChevronRight className="academy-quiz-icon-left" />
         </button>
       </>
     );

@@ -984,8 +984,14 @@ input:checked+.slider:before {
 
 }
 
-.academy-quiz-icon {
+.academy-quiz-icon-left {
   top: 2px;
   left: 5px;
+  position: relative;
+}
+
+.academy-quiz-icon-right {
+  top: 2px;
+  right: ;: 5px;
   position: relative;
 }
