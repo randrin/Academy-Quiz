@@ -69,11 +69,11 @@ class Questions extends Component {
     ) {
       this.setState((prevState) => ({
         userScore: prevState.userScore + 1,
-        idQuestion: prevState.idQuestion + 1,
+        //idQuestion: prevState.idQuestion + 1,
         disabledSubmit: true,
       }));
       // Alert Good Answer
-      toast.success(`Bonne Réponse. +1`, {
+      toast.success(`Bonne Réponse. +1 Point`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -83,8 +83,11 @@ class Questions extends Component {
         progress: undefined,
       });
     } else {
+      this.setState((prevState) => ({
+        disabledSubmit: true,
+      }));
       // Alert Bad Answer
-      toast.error(`Mauvaise Réponse. +0`, {
+      toast.error(`Mauvaise Réponse. +0 Point`, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -122,13 +125,15 @@ class Questions extends Component {
       disabledSubmit,
       userAnswer,
       endQuiz,
+      idQuestion,
+      maxQuestions,
     } = this.state;
 
     return endQuiz ? (
       <EndQuiz />
     ) : (
       <>
-        <ProgressBar />
+        <ProgressBar idQuestion={idQuestion} maxQuestions={maxQuestions} />
         <h2>{question}</h2>
         {options.map((option, index) => {
           return (
@@ -148,7 +153,8 @@ class Questions extends Component {
           onClick={this.nextQuestion}
           className="btnSubmit"
         >
-          Suivant <FaChevronRight className="academy-quiz-icon" />
+          {idQuestion === maxQuestions - 1 ? "Terminer" : "Suivant"}
+          <FaChevronRight className="academy-quiz-icon" />
         </button>
       </>
     );
