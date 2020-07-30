@@ -516,7 +516,7 @@ button[disabled]:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--light-grey-color);
+  background-color: var(--green-color);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -663,14 +663,14 @@ input:checked+.slider:before {
   background-color: transparent;
   border: 2px solid var(--light-green-color);
   color: var(--light-green-color);
-  flex: 0 1 250px;
+  flex: 0 1 30%;
 }
 
 .failure {
   background-color: transparent;
   border: 2px solid var(--red-color);
   color: var(--red-color);
-  flex: 0 1 250px;
+  flex: 0 1 30%;
 }
 
 .gameOver {
@@ -992,6 +992,10 @@ input:checked+.slider:before {
 
 .academy-quiz-icon-right {
   top: 2px;
-  right: ;: 5px;
+  right: 5px;
   position: relative;
+}
+
+.academy-quiz-divider {
+  margin: 50px 0 20px;
 }

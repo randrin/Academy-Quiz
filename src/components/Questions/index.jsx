@@ -11,11 +11,12 @@ class Questions extends Component {
 
     this.state = {
       levels: ["debutant", "confirme", "expert"],
-      firstLevel: 0,
+      academyLevel: 0,
       maxQuestions: 10,
       storedQuestions: [],
       userAnswer: "",
       userScore: 0,
+      userPercentage: 0,
       question: "",
       options: [],
       idQuestion: 0,
@@ -53,9 +54,7 @@ class Questions extends Component {
   nextQuestion = () => {
     // First check the question number not greater than 10
     if (this.state.idQuestion === this.state.maxQuestions - 1) {
-      this.setState({
-        endQuiz: true,
-      });
+      this.goToEndQuiz();
     } else {
       this.setState((prevState) => ({
         idQuestion: prevState.idQuestion + 1,
@@ -99,8 +98,25 @@ class Questions extends Component {
     }
   };
 
+  goToEndQuiz = () => {
+    const userPercentage =
+      (this.state.userScore / this.state.maxQuestions) * 100;
+    if (userPercentage > 50) {
+      this.setState({
+        academyLevel: this.state.academyLevel + 1,
+        endQuiz: true,
+        userPercentage: userPercentage,
+      });
+    } else {
+      this.setState({
+        endQuiz: true,
+        userPercentage: userPercentage,
+      });
+    }
+  };
+
   componentDidMount() {
-    this.loadQuestions(this.state.levels[this.state.firstLevel]);
+    this.loadQuestions(this.state.levels[this.state.academyLevel]);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -120,6 +136,8 @@ class Questions extends Component {
 
   render() {
     const {
+      levels,
+      academyLevel,
       question,
       options,
       disabledSubmit,
@@ -127,10 +145,19 @@ class Questions extends Component {
       endQuiz,
       idQuestion,
       maxQuestions,
+      userPercentage,
+      userScore,
     } = this.state;
 
-    return !endQuiz ? (
-      <EndQuiz ref={this.questionsWithAnswers} />
+    return endQuiz ? (
+      <EndQuiz
+        ref={this.questionsWithAnswers}
+        userPercentage={userPercentage}
+        userScore={userScore}
+        maxQuestions={maxQuestions}
+        academyLevel={academyLevel}
+        levels={levels}
+      />
     ) : (
       <>
         <ProgressBar idQuestion={idQuestion} maxQuestions={maxQuestions} />
