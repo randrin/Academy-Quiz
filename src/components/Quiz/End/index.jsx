@@ -120,7 +120,7 @@ const EndQuiz = React.forwardRef(
               ) : (
                 <>
                   <tr>
-                    <td colspan="3">
+                    <td colSpan="3">
                       <div className="loader"></div>
                       <p className="academy-quiz-no-response">
                         Vous allez être redirigé sur le quiz dans 5s.

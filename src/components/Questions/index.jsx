@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import ProgressBar from "../../components/ProgressBar";
 import { QuizQuestions } from "../../data/index";
+import Levels from "../../components/Levels";
 import { toast } from "react-toastify";
 import EndQuiz from "../Quiz/End";
 toast.configure();
@@ -172,17 +173,21 @@ class Questions extends Component {
     } = this.state;
 
     return endQuiz ? (
-      <EndQuiz
-        ref={this.questionsWithAnswers}
-        userPercentage={userPercentage}
-        userScore={userScore}
-        maxQuestions={maxQuestions}
-        academyLevel={academyLevel}
-        levels={levels}
-        loadLevelQuestion={() => this.loadLevelQuestions(academyLevel)}
-      />
+      <>
+        <Levels levels={levels} academyLevel={academyLevel} />
+        <EndQuiz
+          ref={this.questionsWithAnswers}
+          userPercentage={userPercentage}
+          userScore={userScore}
+          maxQuestions={maxQuestions}
+          academyLevel={academyLevel}
+          levels={levels}
+          loadLevelQuestion={() => this.loadLevelQuestions(academyLevel)}
+        />
+      </>
     ) : (
       <>
+        <Levels levels={levels} academyLevel={academyLevel} />
         <ProgressBar idQuestion={idQuestion} maxQuestions={maxQuestions} />
         <h2>{question}</h2>
         {options.map((option, index) => {

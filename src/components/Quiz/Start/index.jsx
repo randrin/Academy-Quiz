@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Levels from "../../Levels";
 import Questions from "../../Questions";
 
 class StartQuiz extends Component {
@@ -10,7 +9,6 @@ class StartQuiz extends Component {
         <div className="quiz-bg">
           <div className="container">Pseudo: {pseudo}</div>
         </div>
-        <Levels />
         <Questions />
       </>
     );
