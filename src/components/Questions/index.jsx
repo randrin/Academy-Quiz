@@ -9,7 +9,7 @@ class Questions extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.initialState = {
       levels: ["debutant", "confirme", "expert"],
       academyLevel: 0,
       maxQuestions: 10,
@@ -23,9 +23,10 @@ class Questions extends Component {
       disabledSubmit: true,
       endQuiz: false,
     };
-  }
 
-  questionsWithAnswers = React.createRef();
+    this.state = this.initialState;
+    this.questionsWithAnswers = React.createRef();
+  }
 
   loadQuestions = (level) => {
     const allQuizz = QuizQuestions[0].quizz[level];
@@ -115,18 +116,29 @@ class Questions extends Component {
     }
   };
 
+  loadLevelQuestions = (level) => {
+    this.setState({ ...this.initialState, academyLevel: level });
+    this.loadQuestions(this.state.levels[level]);
+  };
+
   componentDidMount() {
     this.loadQuestions(this.state.levels[this.state.academyLevel]);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.storedQuestions !== prevState.storedQuestions) {
+    if (
+      this.state.storedQuestions !== prevState.storedQuestions &&
+      this.state.storedQuestions.length
+    ) {
       this.setState({
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options,
       });
     }
-    if (this.state.idQuestion !== prevState.idQuestion) {
+    if (
+      this.state.idQuestion !== prevState.idQuestion &&
+      this.state.storedQuestions.length
+    ) {
       this.setState({
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options,
@@ -157,6 +169,7 @@ class Questions extends Component {
         maxQuestions={maxQuestions}
         academyLevel={academyLevel}
         levels={levels}
+        loadLevelQuestion={() => this.loadLevelQuestions(academyLevel)}
       />
     ) : (
       <>

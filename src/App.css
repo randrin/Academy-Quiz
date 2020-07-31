@@ -999,3 +999,8 @@ input:checked+.slider:before {
 .academy-quiz-divider {
   margin: 50px 0 20px;
 }
+
+.academy-quiz-no-response {
+  text-align: center;
+  color: var(--red-color);
+}
