@@ -100,6 +100,12 @@ class Questions extends Component {
   };
 
   goToEndQuiz = () => {
+    this.setState({
+      endQuiz: true,
+    });
+  };
+
+  goToEndResult = () => {
     const userPercentage =
       (this.state.userScore / this.state.maxQuestions) * 100;
     if (userPercentage > 50) {
@@ -143,6 +149,10 @@ class Questions extends Component {
         question: this.state.storedQuestions[this.state.idQuestion].question,
         options: this.state.storedQuestions[this.state.idQuestion].options,
       });
+    }
+
+    if (this.state.endQuiz !== prevState.endQuiz) {
+      this.goToEndResult();
     }
   }
 
