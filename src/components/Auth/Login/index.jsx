@@ -30,7 +30,6 @@ const Login = (props) => {
     academyContext
       .loginUser(email, password)
       .then((response) => {
-        console.log(response);
         setUser({ ...userData });
         props.history.push("/welcome");
       })

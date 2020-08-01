@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AcademyContext } from "../Firebase";
+import { AcademyContext } from "../../Firebase";
 import ReactTooltip from "react-tooltip";
 
 const Logout = () => {
@@ -8,7 +8,6 @@ const Logout = () => {
 
   useEffect(() => {
     if (checked) {
-      console.log("Déconnexion....");
       academyContext.logoutUser();
     }
   }, [checked, academyContext]);

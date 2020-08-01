@@ -33,7 +33,6 @@ const SignUp = (props) => {
         });
       })
       .then((response) => {
-        console.log(response);
         setNewUser({ ...newUserData });
         props.history.push("/welcome");
       })

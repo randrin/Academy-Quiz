@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaInfoCircle, FaRegTimesCircle } from "react-icons/fa";
 import Modal from "../../Modal";
 import axios from "axios";
 
@@ -22,25 +22,48 @@ const EndQuiz = React.forwardRef(
 
     useEffect(() => {
       setAnswers(ref.current);
+      if (localStorage.getItem("storageApiDate")) {
+        const date = localStorage.getItem("storageApiDate");
+        checkApiCallData(date);
+      }
     }, [ref]);
 
     const averageQuestions = maxQuestions / 2;
     const API_KEY = process.env.REACT_APP_MARVEL_PUBLIC_KEY;
     const hash = "ab7cc8d1a65a1292bc14a68c26f7e9b3";
 
+    const checkApiCallData = (date) => {
+      const now = Date.now();
+      const timeDifference = now - date;
+      const day = timeDifference / (1000 * 3600 * 24);
+      if (day >= 15) {
+        localStorage.clear();
+        localStorage.setItem("storageApiDate", Date.now());
+      }
+    };
+
     const showInfo = (id) => {
-      axios
-        .get(
-          `https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=${API_KEY}&hash=${hash}`
-        )
-        .then((response) => {
-          setOpenModal(true);
-          setInfosModal(response.data.data);
-          setLoadingInfos(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      setOpenModal(true);
+      if (localStorage.getItem(id)) {
+        setInfosModal(JSON.parse(localStorage.getItem(id)));
+        setLoadingInfos(true);
+      } else {
+        axios
+          .get(
+            `https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=${API_KEY}&hash=${hash}`
+          )
+          .then((response) => {
+            setInfosModal(response.data);
+            localStorage.setItem(id, JSON.stringify(response.data.data));
+            if (!localStorage.getItem("storageApiDate")) {
+              localStorage.setItem("storageApiDate", Date.now());
+            }
+            setLoadingInfos(true);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     };
 
     const closeModal = () => {
@@ -51,13 +74,48 @@ const EndQuiz = React.forwardRef(
     const modalInformations = loadingInfos ? (
       <>
         <div className="modalHeader">
-          <h2>{infosModal.results[0].name}</h2>
+          <h2>{infosModal.data.results[0].name}</h2>
         </div>
         <div className="modalBody">
-          <h3>{infosModal.results[0].description}</h3>
+          <div className="comicImage">
+            <img
+              src={
+                infosModal.data.results[0].thumbnail.path +
+                "." +
+                infosModal.data.results[0].thumbnail.extension
+              }
+              alt={infosModal.data.results[0].name}
+            />
+            {infosModal.data.attributionText}
+          </div>
+          <div className="comicDetails">
+            <h3>Description</h3>
+            <p>
+              {infosModal.data.results[0].description === ""
+                ? "Description Indisponibile pour le moment."
+                : infosModal.data.results[0].description}
+            </p>
+            <h3>Plus d'Informations</h3>
+            {infosModal.data.results[0].urls &&
+              infosModal.data.results[0].urls.map((link, index) => {
+                return (
+                  <a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btnInfo"
+                  >
+                    {link.type}
+                  </a>
+                );
+              })}
+          </div>
         </div>
         <div className="modalFooter">
-          <button className="modalBtn">Fermer</button>
+          <button className="modalBtn" onClick={closeModal}>
+            <FaRegTimesCircle className="academy-quiz-icon-right" /> Fermer
+          </button>
         </div>
       </>
     ) : (
@@ -186,9 +244,7 @@ const EndQuiz = React.forwardRef(
               )}
             </tbody>
           </table>
-          <Modal openModal={openModal} closeModal={closeModal}>
-            {modalInformations}
-          </Modal>
+          <Modal openModal={openModal}>{modalInformations}</Modal>
         </div>
       </>
     );
