@@ -199,7 +199,7 @@ class Questions extends Component {
                 userAnswer === option ? "selected" : null
               }`}
             >
-              {option}
+              <FaChevronRight className="academy-quiz-icon-right" /> {option}
             </p>
           );
         })}
