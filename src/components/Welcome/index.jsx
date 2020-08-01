@@ -24,7 +24,7 @@ const Welcome = (prop) => {
             setUserData(user);
             // Alert Welcome User
             if (user.pseudo) {
-              toast.info(`Welocome ${user.pseudo} to Academy Quizz`, {
+              toast.info(`Welcome ${user.pseudo} to Academy Quizz`, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

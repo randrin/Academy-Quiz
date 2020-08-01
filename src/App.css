@@ -797,9 +797,9 @@ input:checked+.slider:before {
 }
 
 .modalBody {
-  padding: 30px 10px;
+  padding: 30px 15px;
   background: var(--white-color);
-  height: 400px;
+  height: auto;
   overflow: auto;
 
   display: flex;
