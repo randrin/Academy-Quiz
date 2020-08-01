@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaInfoCircle } from "react-icons/fa";
+import Modal from "../../Modal";
 
 const EndQuiz = React.forwardRef(
   (
@@ -14,10 +15,20 @@ const EndQuiz = React.forwardRef(
     ref
   ) => {
     const [answers, setAnswers] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
       setAnswers(ref.current);
     }, [ref]);
+
+    const showInfo = (id) => {
+      console.log("showInfo: ", id);
+      setOpenModal(true);
+    };
+
+    const closeModal = () => {
+      setOpenModal(false);
+    };
 
     const averageQuestions = maxQuestions / 2;
     const userResult =
@@ -94,8 +105,8 @@ const EndQuiz = React.forwardRef(
           <table className="answers">
             <thead>
               <tr>
-                <th>Question</th>
-                <th>Réponse</th>
+                <th>Questions</th>
+                <th>Réponses</th>
                 <th>Informations</th>
               </tr>
             </thead>
@@ -108,7 +119,10 @@ const EndQuiz = React.forwardRef(
                         <td>{answer.question}</td>
                         <td>{answer.answer}</td>
                         <td>
-                          <button className="btnInfo">
+                          <button
+                            className="btnInfo"
+                            onClick={() => showInfo(answer.heroId)}
+                          >
                             <FaInfoCircle className="academy-quiz-icon-right" />
                             Infos
                           </button>
@@ -131,6 +145,17 @@ const EndQuiz = React.forwardRef(
               )}
             </tbody>
           </table>
+          <Modal openModal={openModal} closeModal={closeModal}>
+            <div className="modalHeader">
+              <h2>Title</h2>
+            </div>
+            <div className="modalBody">
+              <h3>Description</h3>
+            </div>
+            <div className="modalFooter">
+              <button className="modalBtn">Fermer</button>
+            </div>
+          </Modal>
         </div>
       </>
     );
