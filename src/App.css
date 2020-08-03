@@ -450,6 +450,52 @@ button[disabled]:hover {
 
 /* END SIGNUP - LOGIN - FORGETPASSWORD */
 
+/* EMAIL VERIFIED */
+.emailVerifiedPage {
+  background-color: var(--white-color);
+  display: flex;
+  justify-content: space-between;
+  height: 500px;
+}
+
+.emailVerifiedBox {
+  margin: 50px auto;
+  text-align: center;
+}
+
+.emailVerifiedIcon {
+  font-size: 72px;
+  margin: 15px 0;
+}
+
+.emailVerifiedBox .emailVerifiedTitle {
+  color: var(--deep-black-color);
+  margin: 15px 0;
+}
+
+.emailVerifiedSubtitle {
+  font-weight: normal;
+  text-align: center;
+  font-family: 'Roboto Condensed',
+    sans-serif;
+}
+
+.emailVerifiedCta {
+  display: grid;
+}
+
+.emailVerifiedCta span {
+  font-family: 'Roboto Condensed',
+    sans-serif;
+  margin: 15px 0px;
+}
+
+.emailVerifiedCtaEmail {
+  color: var(--dark-red-color)
+}
+
+/* END EMAIL VERIFIED */
+
 /* LOADER */
 .loader {
   border: 10px solid var(--light-grey-color);
@@ -1003,4 +1049,12 @@ input:checked+.slider:before {
 .academy-quiz-no-response {
   text-align: center;
   color: var(--red-color);
+}
+
+.academy-quiz-color-red {
+  color: var(--red-color) !important;
+}
+
+.academy-quiz-color-green {
+  color: var(--green-color) !important;
 }

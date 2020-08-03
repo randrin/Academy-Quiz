@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { FaUserPlus } from "react-icons/fa";
 import { AcademyContext } from "../../Firebase";
+import VerifiedEmail from "../VerifiedEmail";
 
 const SignUp = (props) => {
   const newUserData = {
@@ -12,6 +14,7 @@ const SignUp = (props) => {
 
   const [newUser, setNewUser] = useState(newUserData);
   const [error, setError] = useState("");
+  const [emailVerified, setEmailVerified] = useState(false);
   const academyContext = useContext(AcademyContext);
 
   const handleChange = (e) => {
@@ -27,15 +30,24 @@ const SignUp = (props) => {
     academyContext
       .signUpUser(email, password)
       .then((response) => {
-        return academyContext.signUpUserWithUID(response.user.uid).set({
+        response.user
+          .sendEmailVerification()
+          .then(() => {
+            setNewUser({ ...response.user });
+            setEmailVerified(true);
+          })
+          .catch((error) => {
+            setError(error);
+          });
+        academyContext.signUpUserWithUID(response.user.uid).set({
           pseudo,
           email,
         });
       })
-      .then((response) => {
-        setNewUser({ ...newUserData });
-        props.history.push("/welcome");
-      })
+      // .then((response) => {
+      //   setNewUser({ response.user });
+      //   //props.history.push("/welcome");
+      // })
       .catch((error) => {
         setError(error);
       });
@@ -49,15 +61,23 @@ const SignUp = (props) => {
     email === "" ||
     password === "" ||
     confirmatioPassword !== password ? (
-      <button disabled>Register</button>
+      <button disabled>
+        <FaUserPlus className="academy-quiz-icon-right" />
+        Register
+      </button>
     ) : (
-      <button className="btn-loginAndSign">Register</button>
+      <button className="btn-loginAndSign">
+        <FaUserPlus className="academy-quiz-icon-right" />
+        Register
+      </button>
     );
 
   // Validation Error
   const errorMsg = error !== "" && <span>{error.message}</span>;
 
-  return (
+  return emailVerified ? (
+    <VerifiedEmail email={email} />
+  ) : (
     <div className="signUpLoginBox">
       <div className="slContainer">
         <div className="formBoxLeftSignup"></div>
@@ -72,7 +92,7 @@ const SignUp = (props) => {
                   onChange={handleChange}
                   id="pseudo"
                   name="pseudo"
-                  value={pseudo}
+                  value={pseudo || ""}
                   autoComplete="off"
                   required
                 />
@@ -84,7 +104,7 @@ const SignUp = (props) => {
                   onChange={handleChange}
                   id="email"
                   name="email"
-                  value={email}
+                  value={email || ""}
                   autoComplete="off"
                   required
                 />
@@ -96,7 +116,7 @@ const SignUp = (props) => {
                   onChange={handleChange}
                   id="password"
                   name="password"
-                  value={password}
+                  value={password || ""}
                   autoComplete="off"
                   required
                 />
@@ -108,7 +128,7 @@ const SignUp = (props) => {
                   onChange={handleChange}
                   id="confirmatioPassword"
                   name="confirmatioPassword"
-                  value={confirmatioPassword}
+                  value={confirmatioPassword || ""}
                   autoComplete="off"
                   required
                 />

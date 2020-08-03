@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
+import { FaCheck, FaRegFrown } from "react-icons/fa";
 import { AcademyContext } from "../../Firebase";
 
 const Login = (props) => {
@@ -10,6 +11,7 @@ const Login = (props) => {
 
   const [user, setUser] = useState(userData);
   const [error, setError] = useState("");
+  const [userVerified, setUserVerified] = useState(false);
   const academyContext = useContext(AcademyContext);
   const hoverInput = useRef(null);
 
@@ -30,8 +32,13 @@ const Login = (props) => {
     academyContext
       .loginUser(email, password)
       .then((response) => {
-        setUser({ ...userData });
-        props.history.push("/welcome");
+        console.log("Login User: ", response);
+        if (response.user.emailVerified) {
+          setUser({ ...userData });
+          props.history.push("/welcome");
+        } else {
+          setUserVerified(true);
+        }
       })
       .catch((error) => {
         setError(error);
@@ -43,9 +50,14 @@ const Login = (props) => {
   // Validation Submit Button
   const btnSubmit =
     email !== "" && password.length > 5 ? (
-      <button className="btn-loginAndSign">Connexion</button>
+      <button className="btn-loginAndSign">
+        <FaCheck className="academy-quiz-icon-right" /> Connexion
+      </button>
     ) : (
-      <button disabled>Connexion</button>
+      <button disabled>
+        <FaCheck className="academy-quiz-icon-right" />
+        Connexion
+      </button>
     );
 
   // Validation Error
@@ -55,7 +67,26 @@ const Login = (props) => {
     </div>
   );
 
-  return (
+  return userVerified ? (
+    <div className="emailVerifiedPage">
+      <div className="emailVerifiedBox">
+        <FaRegFrown className="emailVerifiedIcon academy-quiz-color-red" />
+        <h1 className="emailVerifiedTitle">Pas Authorisé</h1>
+        <h2 className="emailVerifiedSubtitle">
+          Votre compte n'est pas validé
+        </h2>
+        <div className="emailVerifiedCta">
+          <span>
+            Lors de votre régistration, un mail d'activation a été envoyé à l'adresse
+            électronique que vous avez precisé. Bien vouloir vous rendre dans votre compte.
+          </span>
+          <Link to="/login" className="btn-loginAndSign">
+            <FaCheck className="academy-quiz-icon-right" /> Connexion
+          </Link>
+        </div>
+      </div>
+    </div>
+  ) : (
     <div className="signUpLoginBox">
       <div className="slContainer">
         <div className="formBoxLeftLogin"></div>

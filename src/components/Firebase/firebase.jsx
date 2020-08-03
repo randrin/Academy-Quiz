@@ -28,11 +28,11 @@ class Firebase {
   // Sign Up with Cloud Firestore
   signUpUserWithUID = (uid) => this.db.doc(`users/${uid}`);
 
-  // LOgin
+  // Login
   loginUser = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
-  // LOgout
+  // Logout
   logoutUser = () => this.auth.signOut();
 
   // Reset Password
