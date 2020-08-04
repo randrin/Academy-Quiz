@@ -72,13 +72,12 @@ const Login = (props) => {
       <div className="emailVerifiedBox">
         <FaRegFrown className="emailVerifiedIcon academy-quiz-color-red" />
         <h1 className="emailVerifiedTitle">Pas Authorisé</h1>
-        <h2 className="emailVerifiedSubtitle">
-          Votre compte n'est pas validé
-        </h2>
+        <h2 className="emailVerifiedSubtitle">Votre compte n'est pas validé</h2>
         <div className="emailVerifiedCta">
           <span>
-            Lors de votre régistration, un mail d'activation a été envoyé à l'adresse
-            électronique que vous avez precisé. Bien vouloir vous rendre dans votre compte.
+            Lors de votre régistration, un mail d'activation de compte a été
+            envoyé à <span className="emailVerifiedCtaEmail">{email}</span>.
+            Bien vouloir vous rendre dans votre courrier électronique.
           </span>
           <Link to="/login" className="btn-loginAndSign">
             <FaCheck className="academy-quiz-icon-right" /> Connexion

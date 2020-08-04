@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AcademyContext } from "../../Firebase";
 import ReactTooltip from "react-tooltip";
+import { toast } from "react-toastify";
+toast.configure();
 
 const Logout = () => {
   const [checked, setChecked] = useState(false);
@@ -14,6 +16,16 @@ const Logout = () => {
 
   const handleChange = (e) => {
     setChecked(e.target.checked);
+    // Alert Logout
+    toast.info(`Vous vous êtes déconnecté avec succés.`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   return (

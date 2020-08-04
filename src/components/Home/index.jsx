@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaCheck, FaUserPlus } from "react-icons/fa";
 
 const Home = () => {
   const [btn, setBtn] = useState(false);
@@ -39,14 +40,20 @@ const Home = () => {
             onMouseOut={clearImg}
             className="leftBox"
           >
-            <Link to="/signup" className="btn-welcome">Inscription</Link>
+            <Link to="/signup" className="btn-welcome">
+              <FaUserPlus className="academy-quiz-icon-right" />
+              Inscription
+            </Link>
           </div>
           <div
             onMouseOver={showRightImg}
             onMouseOut={clearImg}
             className="rightBox"
           >
-            <Link to="/login" className="btn-welcome">Connexion</Link>
+            <Link to="/login" className="btn-welcome">
+              <FaCheck className="academy-quiz-icon-right" />
+              Connexion
+            </Link>
           </div>
         </>
       )}
