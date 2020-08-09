@@ -12,7 +12,9 @@ const Welcome = (prop) => {
 
   useEffect(() => {
     let listener = academyContext.auth.onAuthStateChanged((user) => {
-      user ? setUserIsLogged(user) : prop.history.push("/");
+      user && user.emailVerified
+        ? setUserIsLogged(user)
+        : prop.history.push("/");
     });
     if (!!userIsLogged) {
       academyContext

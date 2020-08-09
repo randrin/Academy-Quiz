@@ -480,14 +480,16 @@ button[disabled]:hover {
     sans-serif;
 }
 
-.emailVerifiedCta {
+.emailVerifiedMessage {
   display: grid;
 }
 
-.emailVerifiedCta span {
+.emailVerifiedMessage span {
   font-family: 'Roboto Condensed',
     sans-serif;
   margin: 15px 0px;
+  letter-spacing: 0.8px;
+  line-height: 25px;
 }
 
 .emailVerifiedCtaEmail {
@@ -1057,4 +1059,11 @@ input:checked+.slider:before {
 
 .academy-quiz-color-green {
   color: var(--green-color) !important;
+}
+
+.academy-quiz-question {
+  background: var(--green-color);
+  color: var(--white-color);
+  padding: 20px 10px;
+  border-radius: 5px;
 }

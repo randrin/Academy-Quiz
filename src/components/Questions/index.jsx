@@ -189,7 +189,7 @@ class Questions extends Component {
       <>
         <Levels levels={levels} academyLevel={academyLevel} />
         <ProgressBar idQuestion={idQuestion} maxQuestions={maxQuestions} />
-        <h2>{question}</h2>
+        <h2 className="academy-quiz-question">{question}</h2>
         {options.map((option, index) => {
           return (
             <p

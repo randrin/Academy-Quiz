@@ -4,6 +4,7 @@ import Header from "../Header";
 import Home from "../Home";
 import Footer from "../Footer";
 import Welcome from "../Welcome";
+import Admin from "../Cms/AddQuestions";
 import Login from "../Auth/Login";
 import SignUp from "../Auth/SignUp";
 import ErrorPage from "../Errors";
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/welcome" component={Welcome} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/admin" component={Admin} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
         <Route component={ErrorPage} />
       </Switch>

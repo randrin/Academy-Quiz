@@ -15,7 +15,7 @@ const VerifiedEmail = ({ email }) => {
           <span>
             Un mail d'activation de votre compte a été envoyé à l'adresse
             électronique <span className="emailVerifiedCtaEmail">{email}</span>.
-            Bien vouloir cliquer sur le lien.
+            Bien vouloir cliquer sur le lien pour finaliser votre inscription sur Academy Quiz.
           </span>
           <Link to="/login" className="btn-loginAndSign">
             <FaCheck className="academy-quiz-icon-right" /> Connexion

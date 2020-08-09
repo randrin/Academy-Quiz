@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaCheck, FaRegFrown } from "react-icons/fa";
 import { AcademyContext } from "../../Firebase";
@@ -12,8 +12,23 @@ const Login = (props) => {
   const [user, setUser] = useState(userData);
   const [error, setError] = useState("");
   const [userVerified, setUserVerified] = useState(false);
+   const [sendEmail, setSendEmail] = useState(false);
   const academyContext = useContext(AcademyContext);
   const hoverInput = useRef(null);
+  const [userIsLogged, setUserIsLogged] = useState(false);
+
+  useEffect(() => {
+    let listener = academyContext.auth.onAuthStateChanged((user) => {
+      console.log("useEffect User: ", user);
+      user && user.emailVerified
+        ? props.history.push("/")
+        : setUserIsLogged(true);
+    });
+
+    return () => {
+      listener();
+    };
+  }, [userIsLogged, academyContext, props.history]);
 
   const removeErrorMessage = () => {
     console.log(hoverInput.current);
@@ -45,6 +60,19 @@ const Login = (props) => {
       });
   };
 
+  const sendEmailVerification = () => {
+    console.log("sendEmailVerification");
+    // user
+    //   .sendEmailVerification()
+    //   .then(() => {
+    //     setSendEmail(true);
+    //     console.log("sendEmailVerification: ", sendEmail);
+    //   })
+    //   .catch((error) => {
+    //     setError(error);
+    //   });
+  };
+
   const { email, password } = user;
 
   // Validation Submit Button
@@ -73,15 +101,20 @@ const Login = (props) => {
         <FaRegFrown className="emailVerifiedIcon academy-quiz-color-red" />
         <h1 className="emailVerifiedTitle">Pas Authorisé</h1>
         <h2 className="emailVerifiedSubtitle">Votre compte n'est pas validé</h2>
-        <div className="emailVerifiedCta">
+        <div className="emailVerifiedMessage">
           <span>
             Lors de votre régistration, un mail d'activation de compte a été
             envoyé à <span className="emailVerifiedCtaEmail">{email}</span>.
-            Bien vouloir vous rendre dans votre courrier électronique.
+            <br />
+            Bien vouloir vous rendre dans votre courrier électronique et
+            finaliser votre inscription sur Academy Quiz.
           </span>
-          <Link to="/login" className="btn-loginAndSign">
-            <FaCheck className="academy-quiz-icon-right" /> Connexion
-          </Link>
+        </div>
+        <div className="emailVerifiedMessage">
+          <span>Mail d'activation as réçu?</span>
+          <button onClick={sendEmailVerification} className="btn-loginAndSign">
+            <FaCheck className="academy-quiz-icon-right" /> Send Again
+          </button>
         </div>
       </div>
     </div>
